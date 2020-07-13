@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
 });
- */
-Route::get('/', 'PostController@index');
+
+// Route::get('/', 'PostController@index');
+Route::post('/form-submit', 'LeadController@store');
 Route::get('/posts/{post}', 'PostController@show');
