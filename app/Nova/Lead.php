@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
+//use Laravel\Nova\Metrics\Trend;
 
 class Lead extends Resource
 {
@@ -80,7 +81,11 @@ class Lead extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            (new Metrics\LeadsPerDay)->width('1/3'),
+            (new Metrics\NewLeads)->width('1/3'),
+            (new Metrics\LeadsPerStatus)->width('1/3'),
+        ];
     }
 
     /**
@@ -91,7 +96,10 @@ class Lead extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\LeadStatus,
+            new Filters\LeadType,
+        ];
     }
 
     /**
@@ -102,7 +110,9 @@ class Lead extends Resource
      */
     public function lenses(Request $request)
     {
-        return [];
+        return [
+            new Lenses\TimeIntensiveLeads,
+        ];
     }
 
     /**
@@ -113,6 +123,8 @@ class Lead extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new Actions\UpdateLeadStatus,
+        ];
     }
 }
